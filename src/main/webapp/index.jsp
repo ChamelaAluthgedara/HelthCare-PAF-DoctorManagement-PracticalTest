@@ -16,6 +16,8 @@
     <body>
         <div class="container">
             <h1 align="center">Doctor Management</h1>
+            <div id="alertSuccess" class="alert alert-success"></div>
+					<div id="alertError" class="alert alert-danger"></div>
            <!--  <button id="newTutBtn" class="btn btn-primary btn-block">Add New Doctor</button><br /><br /> -->
             <br /><br />
             <form id="newForm">
@@ -75,6 +77,7 @@
                     <input type="number" class="form-control" id="hosID" placeholder="Hospital ID">
                   </div>
               </div>
+              
               
               <button id="submitDoctorBtn" type="submit" class="btn btn-primary">Submit Details</button>
               <button id="updateDoctorBtn" type="submit" class="btn btn-primary">Update Details</button>

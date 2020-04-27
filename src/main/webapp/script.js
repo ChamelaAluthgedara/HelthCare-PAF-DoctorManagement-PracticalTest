@@ -1,11 +1,19 @@
+$(document).ready(function()
+	{
+	 $("#alertSuccess").hide();
+	 $("#alertError").hide();
+	});
+
+
+
 $(document).ready(function(){
     
     getRegisteredDoctors();
     $("#updateDoctorBtn").hide();
     
-//    $("#newTutBtn").on("click", function(e){
-//        $("#newForm").toggle();
-//    });
+// $("#newTutBtn").on("click", function(e){
+// $("#newForm").toggle();
+// });
 //    
     function getRegisteredDoctors(){
         $('#doctorsDetailssBody').html('');
@@ -51,13 +59,85 @@ $(document).ready(function(){
      		   hosID: $($("#newForm")[0].hosID).val()
         } 
         
-        
-         createDoctor(data);
-         $("#newForm").trigger("reset");
-         e.preventDefault();
-        
-     });
      
+        
+         
+        
+         
+      // Clear status msges-------------
+       	 $("#alertSuccess").text("");
+       	 $("#alertSuccess").hide();
+       	 $("#alertError").text("");
+       	 $("#alertError").hide();
+       	 
+       	// Form validation----------------
+       	 var status = validateItemForm();
+       	
+       	 
+    
+        
+       	// If not valid-------------------
+       	if (status != true)
+       	 {
+	       	 $("#alertError").text(status);
+	       	 $("#alertError").show();
+       	 }
+//       	 
+       	if(status == true){
+       		createDoctor(data);
+       	 $("#alertSuccess").text("Data Successfully Submitted.");
+         $("#alertSuccess").show();
+       	}
+            $("#newForm").trigger("reset");
+            e.preventDefault();
+           
+       	
+       	
+       	 
+     });
+    
+    
+    function validateItemForm()
+	{
+
+
+		if ($("#docID").val().trim() == "")
+		 {
+			return "Empty Field Detected: Doctor's ID.";
+		 }
+		if ($("#docFname").val().trim() == "")
+		 {
+			return "Empty Field Detected: Doctor's Firstname.";
+		 }
+		if ($("#docLname").val().trim() == "")
+		 {
+			return "Empty Field Detected: Doctor's Lastname.";
+		 }
+		if ($("#docPosition").val().trim() == "")
+		 {
+			return "Empty Field Detected: Doctor's Position.";
+		 }
+		if ($("#docFee").val().trim() == "")
+		 {
+			return "Empty Field Detected: Doctor's Fee.";
+		 }
+		if ($("#docAddress").val().trim() == "")
+		 {
+			return "Empty Field Detected: Doctor's Address.";
+		 }
+		if ($("#mobileNo").val().trim() == "")
+		 {
+			return "Empty Field Detected: Doctor's Mobile Number.";
+		 }
+		if ($("#hosID").val().trim() == "")
+		 {
+			return "Empty Field Detected: Doctor's Hospital ID.";
+		 }
+		
+			return true;
+	}
+    
+    
      
      function createDoctor(data) {
          $.ajax({
@@ -106,7 +186,7 @@ $(document).ready(function(){
                  $($("#newForm")[0].mobileNo).val(data.mobileNo);
                  $($("#newForm")[0].hosID).val(data.hosID);
                  $("#updateForm").show();
-                 //$("#newForm").hide();
+                 // $("#newForm").hide();
              }
          });
      }
@@ -115,7 +195,7 @@ $(document).ready(function(){
      
      function updateDoctorDetails(id, data){
      	console.log(data);
-     	 //+ id
+     	 // + id
          $.ajax({
              url: 'doctorAPI',
              method: 'PUT',
@@ -149,9 +229,35 @@ $(document).ready(function(){
      		   hosID: $($("#newForm")[0].hosID).val()
         } 
         
-         updateDoctorDetails($($("#newForm")[0].docID).val(), data);
+     // Clear status msges-------------
+      	 $("#alertSuccess").text("");
+      	 $("#alertSuccess").hide();
+      	 $("#alertError").text("");
+      	 $("#alertError").hide();
+      	 
+      	// Form validation----------------
+      	 var status = validateItemForm();
+      	
+      	 
+   
+       
+      	// If not valid-------------------
+      	if (status != true)
+      	 {
+	       	 $("#alertError").text(status);
+	       	 $("#alertError").show();
+	       	$("#updateDoctorBtn").show();
+      	 }
+      	
+        if(status == true){
+        	updateDoctorDetails($($("#newForm")[0].docID).val(), data);
+       	 $("#alertSuccess").text("Data Successfully Submitted.");
+         $("#alertSuccess").show();
+       	}
+         
          $("#newForm").trigger("reset");
          $("#updateDoctorBtn").hide();
+         $("#submitDoctorBtn").show();
          e.preventDefault();
          
         
