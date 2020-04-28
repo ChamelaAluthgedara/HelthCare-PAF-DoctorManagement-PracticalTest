@@ -78,8 +78,7 @@ $(document).ready(function(){
      		   docFee: $($("#newForm")[0].docFee).val(),
      		   docAddress: $($("#newForm")[0].docAddress).val(),
      		   mobileNo: $($("#newForm")[0].mobileNo).val(),
-     		  // hosID: $($("#newForm")[0].hosID).val(),
-     		  hosID: $('#hosID option:selected').text()
+     		   hosID: $('#hosID :selected').text()
         } 
         console.log($('#hosID option:selected').text());
          
@@ -143,10 +142,10 @@ $(document).ready(function(){
 		 {
 			return "Empty Field Detected: Doctor's Mobile Number.";
 		 }
-		if ($("#hosID").val().trim() == "")
-		 {
-			return "Empty Field Detected: Doctor's Hospital ID.";
-		 }
+//		if ($("#hosID").val().trim() == "")
+//		 {
+//			return "Empty Field Detected: Doctor's Hospital ID.";
+//		 }
 		
 			return true;
 	}

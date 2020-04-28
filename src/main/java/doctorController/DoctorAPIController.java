@@ -48,9 +48,6 @@ public class DoctorAPIController extends HttpServlet {
 		for( Integer i : d.getAllHospitals()) {
 			hostpitals.add(i);
 		}
-//		hostpitals.add("p01");
-//		hostpitals.add("p02");
-//		hostpitals.add("p03");
 		
 		PrintWriter out = response.getWriter();
 		out.print(gson.toJson(hostpitals));
