@@ -14,6 +14,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+
+
 /**
  * Servlet implementation class DoctorAPIController
  */
@@ -37,7 +40,25 @@ public class DoctorAPIController extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		DoctorService d = new DoctorService();
+		System.out.println("Servlet: " + d.getAllHospitals().get(0));
 		
+		Gson gson = new Gson();
+		List<Object> hostpitals = new ArrayList<Object>();
+		for( Integer i : d.getAllHospitals()) {
+			hostpitals.add(i);
+		}
+//		hostpitals.add("p01");
+//		hostpitals.add("p02");
+//		hostpitals.add("p03");
+		
+		PrintWriter out = response.getWriter();
+		out.print(gson.toJson(hostpitals));
+		out.flush();
+		out.close();
+		
+		
+		response.getWriter().print("Print hey: " + d.getAllHospitals()); 
 	}
 
 	/**
@@ -63,6 +84,7 @@ public class DoctorAPIController extends HttpServlet {
 		doc.add(Integer.parseInt(docDetails.get("hosID").toString()));
 		
 		d.Create(doc);
+		response.getWriter().write("true"); 
 
 	}
 

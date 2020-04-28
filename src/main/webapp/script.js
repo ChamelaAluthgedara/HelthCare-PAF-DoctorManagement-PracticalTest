@@ -1,3 +1,4 @@
+
 $(document).ready(function()
 	{
 	 $("#alertSuccess").hide();
@@ -36,14 +37,35 @@ $(document).ready(function(){
                                             .append($("<td>").append(doctor.mobileNo))
                                             .append($("<td>").append(doctor.hosID))
                                             .append($("<td>").append(`
-                                                <i class="far fa-edit editTut" data-docid="`+doctor.docID+`"></i> 
+                                                <i class="far fa-edit editTut" data-docid="`+doctor.docID+`"></i>
                                                 <i class="fas fa-trash deleteTut" data-docid="`+doctor.docID+`"></i>
                                             `)));
                     });
                 $("#updateForm").hide();
                 $("#submitDoctorBtn").show();
                 loadButtons();
+                getRegisteredHospitaIDs();
                 }
+        });
+      
+    }
+    
+    function getRegisteredHospitaIDs(){
+        $.ajax({
+            url: 'doctorAPI',
+            method: 'get',
+            dataType: 'json',
+            success: function(data) {
+                console.log("Recieved: " + data);
+                
+                var listItems= "";
+                var jsonData = data;
+                    for (var i = 0; i < jsonData.length; i++){
+                      listItems+= "<option value='" + i + "'>" + data[i] + "</option>";
+                    }
+                    $("#hosID").html(listItems);
+            },
+        
         });
     }
     
@@ -56,13 +78,10 @@ $(document).ready(function(){
      		   docFee: $($("#newForm")[0].docFee).val(),
      		   docAddress: $($("#newForm")[0].docAddress).val(),
      		   mobileNo: $($("#newForm")[0].mobileNo).val(),
-     		   hosID: $($("#newForm")[0].hosID).val()
+     		  // hosID: $($("#newForm")[0].hosID).val(),
+     		  hosID: $('#hosID option:selected').text()
         } 
-        
-     
-        
-         
-        
+        console.log($('#hosID option:selected').text());
          
       // Clear status msges-------------
        	 $("#alertSuccess").text("");
@@ -73,14 +92,12 @@ $(document).ready(function(){
        	// Form validation----------------
        	 var status = validateItemForm();
        	
-       	 
-    
-        
        	// If not valid-------------------
        	if (status != true)
        	 {
 	       	 $("#alertError").text(status);
 	       	 $("#alertError").show();
+	       	 
        	 }
 //       	 
        	if(status == true){
@@ -90,9 +107,6 @@ $(document).ready(function(){
        	}
             $("#newForm").trigger("reset");
             e.preventDefault();
-           
-       	
-       	
        	 
      });
     
@@ -136,10 +150,9 @@ $(document).ready(function(){
 		
 			return true;
 	}
-    
-    
-     
+
      function createDoctor(data) {
+    	 console.log(data);
          $.ajax({
              url: 'doctorAPI',
              method: 'POST',
@@ -151,7 +164,7 @@ $(document).ready(function(){
              },
          
          });
-         getRegisteredDoctors();
+         
      }
      
      function loadButtons() {
@@ -160,6 +173,8 @@ $(document).ready(function(){
              $("#submitDoctorBtn").hide();
              $("#updateDoctorBtn").show();
              e.preventDefault();
+             $("#alertSuccess").hide();
+        	 $("#alertError").hide();
              
          });
          
@@ -184,15 +199,13 @@ $(document).ready(function(){
                  $($("#newForm")[0].docFee).val(data.docFee);
                  $($("#newForm")[0].docAddress).val(data.docAddress);
                  $($("#newForm")[0].mobileNo).val(data.mobileNo);
-                 $($("#newForm")[0].hosID).val(data.hosID);
+                 $($("#hosID")[0].hosID).val(data.hosID);
                  $("#updateForm").show();
                  // $("#newForm").hide();
              }
          });
      }
-     
-    
-     
+
      function updateDoctorDetails(id, data){
      	console.log(data);
      	 // + id
@@ -216,8 +229,8 @@ $(document).ready(function(){
      }
 
      
-     
      $("#updateDoctorBtn").on("click", function(e) {
+    	
         let data = {
      		   docID: $($("#newForm")[0].docID).val(),
      		   docFname: $($("#newForm")[0].docFname).val(),
@@ -235,12 +248,11 @@ $(document).ready(function(){
       	 $("#alertError").text("");
       	 $("#alertError").hide();
       	 
+      	 
       	// Form validation----------------
       	 var status = validateItemForm();
-      	
-      	 
-   
-       
+
+
       	// If not valid-------------------
       	if (status != true)
       	 {
@@ -266,12 +278,22 @@ $(document).ready(function(){
      function deleteDoctorDetails(id){
      	console.log(id);
          $.ajax({
-             url: 'http://localhost:8081/HospitalManagementPAF2020/webapi/doctors/doctor/'+ id,
+             url: 'webapi/doctors/doctor/'+ id,
              method: 'DELETE',
              dataType: 'json',
              success: function(data) {
                  console.log(data);
                  getRegisteredDoctors();
+                 
+                 // Clear status msges-------------
+              	 $("#alertSuccess").text("");
+              	 $("#alertSuccess").hide();
+              	 $("#alertError").text("");
+              	 $("#alertError").hide();
+              	 
+              	 $("#alertSuccess").text("Doctor Details Delete Completed.");
+                 $("#alertSuccess").show();
+           
              }
          });
      }
