@@ -3,6 +3,7 @@ $(document).ready(function()
 	{
 	 $("#alertSuccess").hide();
 	 $("#alertError").hide();
+	 $("#editHostId").hide();
 	});
 
 
@@ -63,6 +64,7 @@ $(document).ready(function(){
                     for (var i = 0; i < jsonData.length; i++){
                       listItems+= "<option value='" + i + "'>" + data[i] + "</option>";
                     }
+
                     $("#hosID").html(listItems);
             },
         
@@ -184,6 +186,7 @@ $(document).ready(function(){
      }
      
      function getSingleDoctor(id){
+    	 
     	 console.log(id);
          $.ajax({
              url: 'webapi/doctors/doctor/' + id,
@@ -198,12 +201,24 @@ $(document).ready(function(){
                  $($("#newForm")[0].docFee).val(data.docFee);
                  $($("#newForm")[0].docAddress).val(data.docAddress);
                  $($("#newForm")[0].mobileNo).val(data.mobileNo);
-                 $($("#hosID")[0].hosID).val(data.hosID);
+                 
+                 
+                 var listItems= "";
+                 listItems+= "<option value='" + data.hosID + "'>" + data.hosID + "</option>";
+                  $("#hosID").html(listItems);
+                  
                  $("#updateForm").show();
-                 // $("#newForm").hide();
+                 $("#editHostId").show();
              }
          });
      }
+     
+
+     $("#editHostId").on("click", function(e) {
+    	 $("#editHostId").hide();
+    		 getRegisteredHospitaIDs();
+      });
+    
 
      function updateDoctorDetails(id, data){
      	console.log(data);
@@ -238,9 +253,9 @@ $(document).ready(function(){
      		   docFee: $($("#newForm")[0].docFee).val(),
      		   docAddress: $($("#newForm")[0].docAddress).val(),
      		   mobileNo: $($("#newForm")[0].mobileNo).val(),
-     		   hosID: $($("#newForm")[0].hosID).val()
+     		   hosID: parseInt($($("#newForm")[0].hosID).val())+1
         } 
-        
+       
      // Clear status msges-------------
       	 $("#alertSuccess").text("");
       	 $("#alertSuccess").hide();
@@ -261,8 +276,9 @@ $(document).ready(function(){
       	 }
       	
         if(status == true){
+       
         	updateDoctorDetails($($("#newForm")[0].docID).val(), data);
-       	 $("#alertSuccess").text("Data Successfully Submitted.");
+       	 $("#alertSuccess").text("Data Successfully Updated.");
          $("#alertSuccess").show();
        	}
          

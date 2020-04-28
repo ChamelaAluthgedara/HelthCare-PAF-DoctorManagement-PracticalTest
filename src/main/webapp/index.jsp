@@ -48,7 +48,7 @@
 <body>
 	<div class="container">
 		<h1 align="center">Doctor Management</h1>
-
+<hr>
 		<form id="newForm">
 
 			<div class="form-group row">
@@ -109,15 +109,17 @@
 			</div>
 
 			<div class="form-group row">
-				<label for="hosID" class="col-sm-2 col-form-label">Hospital ID</label>
+				<label for="hosID" class="col-sm-2 col-form-label">Hospital ID</label> 
 				<div class="col-sm-10">
-					<select id="hosID" name="ddlYear">
+					<select id="hosID" name="hosID">
 					</select>
+					<label id="editHostId" class="col-form-label" > Edit </label> 
 					<!-- 					<input type="number" class="form-control" id="hosID" oninput="maxLengthCheck(this)" placeholder="Hospital ID" maxlength="4">
  -->
 				</div>
 			</div>
 
+<hr>
 			<div class="btn-group">
 				<button id="submitDoctorBtn" type="submit" class="btn btn-primary">Submit Details</button>
 				<button id="alertError" class="alert alert-danger" disabled></button>
@@ -132,7 +134,7 @@
 		</form>
 
 		<br />
-
+<hr>
 		<table id="doctorDetailsTable"
 			class="table table-bordered table-hover">
 			<thead>
