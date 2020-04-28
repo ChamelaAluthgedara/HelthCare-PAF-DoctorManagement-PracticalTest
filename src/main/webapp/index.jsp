@@ -4,18 +4,19 @@
 <html>
 <head>
 <title>Doctor Management</title>
-
-				<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
-				<script src="script.js"></script>
-
-				<link rel="stylesheet"
-					href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
-					crossorigin="anonymous">
-				<link rel="stylesheet"
-					href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-				<link rel="stylesheet" href="style.css">
-
-				<style>
+		
+		<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+		<script src="script.js"></script>
+		<script src="notify.js"></script>
+		
+		<link rel="stylesheet"
+			href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+			crossorigin="anonymous">
+		<link rel="stylesheet"
+			href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<link rel="stylesheet" href="style.css">
+		
+		<style>
 				input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 					-webkit-appearance: none;
 					margin: 0;
@@ -34,21 +35,20 @@
 					margin-left: 15px;
 					/*/ /* Float the buttons side by side */
 				}
-				
-				</style>
-				<script>
-					function maxLengthCheck(object) {
-						if (object.value.length > object.maxLength)
-							object.value = object.value.slice(0, object.maxLength)
-					}
-				</script>
-
+		</style>
+		<script>
+				function maxLengthCheck(object) {
+					if (object.value.length > object.maxLength)
+						object.value = object.value.slice(0, object.maxLength)
+				}
+		</script>
+		
 
 </head>
 <body>
 	<div class="container">
 		<h1 align="center">Doctor Management</h1>
-<hr>
+		<hr>
 		<form id="newForm">
 
 			<div class="form-group row">
@@ -109,34 +109,23 @@
 			</div>
 
 			<div class="form-group row">
-				<label for="hosID" class="col-sm-2 col-form-label">Hospital ID</label> 
+				<label for="hosID" class="col-sm-2 col-form-label">Hospital
+					ID</label>
 				<div class="col-sm-10">
 					<select id="hosID" name="hosID">
-					</select>
-					<label id="editHostId" class="col-form-label" > Edit </label> 
-					<!-- 					<input type="number" class="form-control" id="hosID" oninput="maxLengthCheck(this)" placeholder="Hospital ID" maxlength="4">
- -->
+					</select> <label id="editHostId" class="col-form-label"> Edit </label>
 				</div>
 			</div>
-
-<hr>
+			<hr>
 			<div class="btn-group">
-				<button id="submitDoctorBtn" type="submit" class="btn btn-primary">Submit Details</button>
-				<button id="alertError" class="alert alert-danger" disabled></button>
-				<button id="alertSuccess" class="alert alert-success" disabled></button>
-				<button id="updateDoctorBtn" type="submit" class="btn btn-primary">Update Details</button>
+				<button id="submitDoctorBtn" type="submit" class="btn btn-primary">SubmitDetails</button>
+				<!-- <button id="alertError" class="alert alert-danger" disabled ></button>
+				<button id="alertSuccess" class="alert alert-success" disabled></button> -->
+				<button id="updateDoctorBtn" type="submit" class="btn btn-primary">UpdateDetails</button>
 			</div>
-<!-- 
-			<div class="btn-group">
-				
-			</div>
- -->
 		</form>
-
-		<br />
-<hr>
-		<table id="doctorDetailsTable"
-			class="table table-bordered table-hover">
+		<hr>
+		<table id="doctorDetailsTable"class="table table-bordered table-hover">
 			<thead>
 				<th>Doc ID</th>
 				<th>Doctor Firstname</th>

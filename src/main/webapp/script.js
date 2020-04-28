@@ -1,8 +1,8 @@
 
 $(document).ready(function()
 	{
-	 $("#alertSuccess").hide();
-	 $("#alertError").hide();
+//	 $("#alertSuccess").hide();
+//	 $("#alertError").hide();
 	 $("#editHostId").hide();
 	});
 
@@ -85,26 +85,30 @@ $(document).ready(function(){
         console.log($('#hosID option:selected').text());
          
       // Clear status msges-------------
-       	 $("#alertSuccess").text("");
-       	 $("#alertSuccess").hide();
-       	 $("#alertError").text("");
-       	 $("#alertError").hide();
-       	 
+//       	 $("#alertSuccess").text("");
+//       	 $("#alertSuccess").hide();
+//       	 $("#alertError").text("");
+//       	 $("#alertError").hide();
+//       	 
        	// Form validation----------------
        	 var status = validateItemForm();
        	
        	// If not valid-------------------
        	if (status != true)
        	 {
-	       	 $("#alertError").text(status);
-	       	 $("#alertError").show();
+//       		
+//	       	 $("#alertError").text(status);
+//	       	 $("#alertError").show();
+
+	       	$.notify(status, "error");
 	       	 
        	 }
 //       	 
        	if(status == true){
        		createDoctor(data);
-       	 $("#alertSuccess").text("Data Successfully Submitted.");
-         $("#alertSuccess").show();
+       		$.notify("Data Successfully Submitted.", "success");
+//       	 $("#alertSuccess").text("Data Successfully Submitted.");
+//         $("#alertSuccess").show();
        	}
             $("#newForm").trigger("reset");
             e.preventDefault();
@@ -257,10 +261,10 @@ $(document).ready(function(){
         } 
        
      // Clear status msges-------------
-      	 $("#alertSuccess").text("");
-      	 $("#alertSuccess").hide();
-      	 $("#alertError").text("");
-      	 $("#alertError").hide();
+//      	 $("#alertSuccess").text("");
+//      	 $("#alertSuccess").hide();
+//      	 $("#alertError").text("");
+//      	 $("#alertError").hide();
       	 
       	 
       	// Form validation----------------
@@ -270,16 +274,20 @@ $(document).ready(function(){
       	// If not valid-------------------
       	if (status != true)
       	 {
-	       	 $("#alertError").text(status);
-	       	 $("#alertError").show();
+//	       	 $("#alertError").text(status);
+//	       	 $("#alertError").show();
+	       	 
+	     	$.notify(status, "error");
 	       	$("#updateDoctorBtn").show();
       	 }
       	
         if(status == true){
        
-        	updateDoctorDetails($($("#newForm")[0].docID).val(), data);
-       	 $("#alertSuccess").text("Data Successfully Updated.");
-         $("#alertSuccess").show();
+        updateDoctorDetails($($("#newForm")[0].docID).val(), data);
+        
+        $.notify("Data Successfully Updated.", "success");
+//       	 $("#alertSuccess").text("Data Successfully Updated.");
+//         $("#alertSuccess").show();
        	}
          
          $("#newForm").trigger("reset");
@@ -301,13 +309,15 @@ $(document).ready(function(){
                  getRegisteredDoctors();
                  
                  // Clear status msges-------------
-              	 $("#alertSuccess").text("");
-              	 $("#alertSuccess").hide();
-              	 $("#alertError").text("");
-              	 $("#alertError").hide();
+//              	 $("#alertSuccess").text("");
+//              	 $("#alertSuccess").hide();
+//              	 $("#alertError").text("");
+//              	 $("#alertError").hide();
+//              	 $("#alertSuccess").text("Doctor Details Delete Completed.");
+//                 $("#alertSuccess").show();
               	 
-              	 $("#alertSuccess").text("Doctor Details Delete Completed.");
-                 $("#alertSuccess").show();
+              	$.notify("Doctor Details Delete Completed.", "warn");
+              	
            
              }
          });
