@@ -1,8 +1,6 @@
 
 $(document).ready(function()
 	{
-//	 $("#alertSuccess").hide();
-//	 $("#alertError").hide();
 	 $("#editHostId").hide();
 	});
 
@@ -12,11 +10,7 @@ $(document).ready(function(){
     
     getRegisteredDoctors();
     $("#updateDoctorBtn").hide();
-    
-// $("#newTutBtn").on("click", function(e){
-// $("#newForm").toggle();
-// });
-//    
+ 
     function getRegisteredDoctors(){
         $('#doctorsDetailssBody').html('');
         $.ajax({
@@ -84,78 +78,23 @@ $(document).ready(function(){
         } 
         console.log($('#hosID option:selected').text());
          
-      // Clear status msges-------------
-//       	 $("#alertSuccess").text("");
-//       	 $("#alertSuccess").hide();
-//       	 $("#alertError").text("");
-//       	 $("#alertError").hide();
-//       	 
-       	// Form validation----------------
+
        	 var status = validateItemForm();
        	
        	// If not valid-------------------
        	if (status != true)
        	 {
-//       		
-//	       	 $("#alertError").text(status);
-//	       	 $("#alertError").show();
-
 	       	$.notify(status, "error");
-	       	 
        	 }
-//       	 
        	if(status == true){
        		createDoctor(data);
-       		$.notify("Data Successfully Submitted.", "success");
-//       	 $("#alertSuccess").text("Data Successfully Submitted.");
-//         $("#alertSuccess").show();
+       		
        	}
             $("#newForm").trigger("reset");
             e.preventDefault();
        	 
      });
-    
-    
-    function validateItemForm()
-	{
-
-
-		if ($("#docID").val().trim() == "")
-		 {
-			return "Empty Field Detected: Doctor's ID.";
-		 }
-		if ($("#docFname").val().trim() == "")
-		 {
-			return "Empty Field Detected: Doctor's Firstname.";
-		 }
-		if ($("#docLname").val().trim() == "")
-		 {
-			return "Empty Field Detected: Doctor's Lastname.";
-		 }
-		if ($("#docPosition").val().trim() == "")
-		 {
-			return "Empty Field Detected: Doctor's Position.";
-		 }
-		if ($("#docFee").val().trim() == "")
-		 {
-			return "Empty Field Detected: Doctor's Fee.";
-		 }
-		if ($("#docAddress").val().trim() == "")
-		 {
-			return "Empty Field Detected: Doctor's Address.";
-		 }
-		if ($("#mobileNo").val().trim() == "")
-		 {
-			return "Empty Field Detected: Doctor's Mobile Number.";
-		 }
-//		if ($("#hosID").val().trim() == "")
-//		 {
-//			return "Empty Field Detected: Doctor's Hospital ID.";
-//		 }
-		
-			return true;
-	}
-
+   
      function createDoctor(data) {
     	 console.log(data);
          $.ajax({
@@ -163,9 +102,19 @@ $(document).ready(function(){
              method: 'POST',
              dataType: 'json',
              data: data,
-             success: function(data) {
-                 console.log(data);
-                 getRegisteredDoctors();
+             success: function(state) {
+                 console.log(state);
+                 
+                 var stateGot = state;
+                 
+                 if(stateGot > 0){
+                	 getRegisteredDoctors();
+                	 $.notify("Data Successfully Submitted.", "success");
+                 }
+                 if(stateGot == 0){
+                		$.notify("Doctor ID already Extist.", "error");
+                 }
+                 
              },
          
          });
@@ -260,13 +209,6 @@ $(document).ready(function(){
      		   hosID: parseInt($($("#newForm")[0].hosID).val())+1
         } 
        
-     // Clear status msges-------------
-//      	 $("#alertSuccess").text("");
-//      	 $("#alertSuccess").hide();
-//      	 $("#alertError").text("");
-//      	 $("#alertError").hide();
-      	 
-      	 
       	// Form validation----------------
       	 var status = validateItemForm();
 
@@ -274,9 +216,6 @@ $(document).ready(function(){
       	// If not valid-------------------
       	if (status != true)
       	 {
-//	       	 $("#alertError").text(status);
-//	       	 $("#alertError").show();
-	       	 
 	     	$.notify(status, "error");
 	       	$("#updateDoctorBtn").show();
       	 }
@@ -322,6 +261,41 @@ $(document).ready(function(){
              }
          });
      }
+     
+     function validateItemForm()
+ 	{
+
+
+ 		if ($("#docID").val().trim() == "")
+ 		 {
+ 			return "Empty Field Detected: Doctor's ID.";
+ 		 }
+ 		if ($("#docFname").val().trim() == "")
+ 		 {
+ 			return "Empty Field Detected: Doctor's Firstname.";
+ 		 }
+ 		if ($("#docLname").val().trim() == "")
+ 		 {
+ 			return "Empty Field Detected: Doctor's Lastname.";
+ 		 }
+ 		if ($("#docPosition").val().trim() == "")
+ 		 {
+ 			return "Empty Field Detected: Doctor's Position.";
+ 		 }
+ 		if ($("#docFee").val().trim() == "")
+ 		 {
+ 			return "Empty Field Detected: Doctor's Fee.";
+ 		 }
+ 		if ($("#docAddress").val().trim() == "")
+ 		 {
+ 			return "Empty Field Detected: Doctor's Address.";
+ 		 }
+ 		if ($("#mobileNo").val().trim() == "")
+ 		 {
+ 			return "Empty Field Detected: Doctor's Mobile Number.";
+ 		 }
+ 			return true;
+ 	}
 });
   
 

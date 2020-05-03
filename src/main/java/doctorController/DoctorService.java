@@ -123,7 +123,7 @@ public class DoctorService {
 				st.setInt(8, d1.getHosID());
 
 				st.executeUpdate();
-				// return "true";
+				 
 			}
 
 //			else
@@ -134,11 +134,10 @@ public class DoctorService {
 
 		} catch (Exception e) {
 			System.out.println(e);
-			// return "false";
+		 return false;
 
 		}
 		return true;
-		// return d1;
 
 	}
 

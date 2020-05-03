@@ -80,8 +80,12 @@ public class DoctorAPIController extends HttpServlet {
 		doc.add(docDetails.get("docAddress").toString());
 		doc.add(Integer.parseInt(docDetails.get("hosID").toString()));
 		
-		d.Create(doc);
-		response.getWriter().write("true"); 
+		if(d.Create(doc))
+		{
+			response.getWriter().write("1"); 
+		}else {
+			response.getWriter().write("0"); 
+		}
 
 	}
 
