@@ -172,9 +172,6 @@ $(document).ready(function(){
         
      }
 //------------------------------------------------------------
-     
-     
-
 
 //--------- Delete Doctor details API ---------------------------------    
      function deleteDoctorDetails(id){
@@ -220,11 +217,10 @@ $(document).ready(function(){
         	// If not valid-------------------
         	if (status != true)
         	 {
- 	       	$.notify(status, "error");
+ 	       		$.notify(status, "error"); //show error message
         	 }
-        	if(status == true){
+        	if(status == true){ //field validation
         		createDoctor(data);
-        		
         	}
              $("#newForm").trigger("reset");
              e.preventDefault();

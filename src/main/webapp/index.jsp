@@ -59,7 +59,6 @@
 		<h1 align="center">Doctor Management</h1>
 		<hr>
 		<form id="newForm">
-
 			<div class="form-group row">
 				<label for="docID" class="col-sm-2 col-form-label">Doctor ID</label>
 				<div class="col-sm-10">
@@ -68,7 +67,6 @@
 						maxlength="4">
 				</div>
 			</div>
-
 			<div class="form-group row">
 				<label for="docFname" class="col-sm-2 col-form-label">Firstname</label>
 				<div class="col-sm-10">
@@ -76,7 +74,6 @@
 						placeholder="Firstname">
 				</div>
 			</div>
-
 			<div class="form-group row">
 				<label for="docLname" class="col-sm-2 col-form-label">Lastname</label>
 				<div class="col-sm-10">
@@ -128,8 +125,6 @@
 			<hr>
 			<div class="btn-group">
 				<button id="submitDoctorBtn" type="submit" class="btn btn-primary">SubmitDetails</button>
-				<!-- <button id="alertError" class="alert alert-danger" disabled ></button>
-				<button id="alertSuccess" class="alert alert-success" disabled></button> -->
 				<button id="updateDoctorBtn" type="submit" class="btn btn-primary">UpdateDetails</button>
 			</div>
 		</form>

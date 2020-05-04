@@ -30,24 +30,6 @@ public class DoctorAPIController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
-//		System.out.println(request.getContentLength());
-//		
-//		
-//		if(request.getContentLength() > 0) {
-//			
-//			DoctorService repo = new DoctorService();
-//			Map<String, String> docDetails = getParasMap(request);
-//			int singleDocID = Integer.parseInt(docDetails.get("id").toString());
-//			System.out.println("Single Doc id: " + singleDocID);
-//			repo.getDoctor(singleDocID);
-//			
-//			Gson gson = new Gson();
-//			PrintWriter out = response.getWriter();
-//			out.print(gson.toJson(repo.getDoctor(singleDocID)));
-//			out.flush();
-//			out.close();
-//		}
-//		
 		//Getting Registered Hospitals
 		DoctorService d = new DoctorService();
 		Gson gson = new Gson();

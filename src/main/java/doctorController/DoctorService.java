@@ -55,7 +55,6 @@ public class DoctorService {
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-		//getAllHospitals();
 		return doctors;
 	}
 
@@ -126,12 +125,6 @@ public class DoctorService {
 				 
 			}
 
-//			else
-//			{
-//				
-//				//return "InvalidhosID";
-//			}
-
 		} catch (Exception e) {
 			System.out.println(e);
 		 return false;
@@ -198,11 +191,9 @@ public class DoctorService {
 			st.setInt(1, id);
 
 			st.executeUpdate();
-			// return true;
 
 		} catch (Exception e) {
 			System.out.println(e);
-			// return false;
 		}
 
 	}
@@ -227,7 +218,6 @@ public class DoctorService {
 		catch(Exception e){
 		
 		}
-		//System.out.println("Hospitals: " + hospitals);
 		return hospitals;
 		
 	}
