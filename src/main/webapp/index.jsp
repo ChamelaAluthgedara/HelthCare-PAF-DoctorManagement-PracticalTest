@@ -35,6 +35,15 @@
 					margin-left: 15px;
 					/*/ /* Float the buttons side by side */
 				}
+				
+				.label12 {
+					  color: white;
+					  padding: 8px;
+					  font-family: Arial;
+					}
+					.warning {background-color: #ff9800;} /* Orange */
+
+
 		</style>
 		<script>
 				function maxLengthCheck(object) {
@@ -113,7 +122,7 @@
 					ID</label>
 				<div class="col-sm-10">
 					<select id="hosID" name="hosID">
-					</select> <label id="editHostId" class="col-form-label"> Edit </label>
+					</select> <label id="editHostId" class="label12 warning" > Edit </label>
 				</div>
 			</div>
 			<hr>

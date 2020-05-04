@@ -24,44 +24,43 @@ import com.google.gson.Gson;
 public class DoctorAPIController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
 	public DoctorAPIController() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	{
+//		System.out.println(request.getContentLength());
+//		
+//		
+//		if(request.getContentLength() > 0) {
+//			
+//			DoctorService repo = new DoctorService();
+//			Map<String, String> docDetails = getParasMap(request);
+//			int singleDocID = Integer.parseInt(docDetails.get("id").toString());
+//			System.out.println("Single Doc id: " + singleDocID);
+//			repo.getDoctor(singleDocID);
+//			
+//			Gson gson = new Gson();
+//			PrintWriter out = response.getWriter();
+//			out.print(gson.toJson(repo.getDoctor(singleDocID)));
+//			out.flush();
+//			out.close();
+//		}
+//		
+		//Getting Registered Hospitals
 		DoctorService d = new DoctorService();
-		System.out.println("Servlet: " + d.getAllHospitals().get(0));
-		
 		Gson gson = new Gson();
 		List<Object> hostpitals = new ArrayList<Object>();
 		for( Integer i : d.getAllHospitals()) {
 			hostpitals.add(i);
 		}
-		
 		PrintWriter out = response.getWriter();
 		out.print(gson.toJson(hostpitals));
 		out.flush();
-		out.close();
-		
-		
-		response.getWriter().print("Print hey: " + d.getAllHospitals()); 
+		out.close(); 
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
@@ -89,9 +88,6 @@ public class DoctorAPIController extends HttpServlet {
 
 	}
 
-	/**
-	 * @see HttpServlet#doPut(HttpServletRequest, HttpServletResponse)
-	 */
 	protected void doPut(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -115,8 +111,19 @@ public class DoctorAPIController extends HttpServlet {
 		
 	}
 
-	protected void doDelete(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {}
+	protected void doDelete(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException 
+	{
+		
+		
+		DoctorService repo = new DoctorService();
+		Map<String, String> docDetails = getParasMap(request);
+		int deleteID = Integer.parseInt(docDetails.get("id").toString());
+		
+		System.out.println("I'm In Delete API: " + deleteID );
+			repo.kill(deleteID);
+			response.getWriter().write("true"); 
+	}
+	
 	
 	private static Map<String, String> getParasMap(HttpServletRequest request) {
 		Map<String, String> map = new HashMap<String, String>();

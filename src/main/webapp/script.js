@@ -2,8 +2,8 @@
 $(document).ready(function()
 	{
 	 $("#editHostId").hide();
+	 $("#docID").prop("readonly",false);
 	});
-
 
 
 $(document).ready(function(){
@@ -17,9 +17,6 @@ $(document).ready(function(){
             url: 'webapi/doctors/',
             method: 'get',
             dataType: 'json',
-            data: {
-                test: 'test data'
-            },
             success: function(data) {
                 $(data).each(function(i, doctor){
                     $('#doctorsDetailssBody').append($("<tr>")
@@ -42,9 +39,31 @@ $(document).ready(function(){
                 getRegisteredHospitaIDs();
                 }
         });
-      
     }
     
+// ------- Buttons Initialization----------------------------------
+    function loadButtons() {
+        $(".editTut").click(function(e){
+            getSingleDoctor($($(this)[0]).data("docid"));
+            $("#submitDoctorBtn").hide();
+            $("#updateDoctorBtn").show();
+            
+            $("#docID").prop("readonly",true);
+            e.preventDefault();
+           
+            
+        });
+        
+        $(".deleteTut").click(function(e){
+            deleteDoctorDetails($($(this)[0]).data("docid"));
+            e.preventDefault();
+        })
+    }
+//------------------------------------------------------------------------
+
+    
+    
+// ------ Getting Registered Hospital Id to set Drop down ----------------
     function getRegisteredHospitaIDs(){
         $.ajax({
             url: 'doctorAPI',
@@ -64,37 +83,9 @@ $(document).ready(function(){
         
         });
     }
+// --------------------------------------------------------------------------- 
     
-    $("#submitDoctorBtn").on("click", function(e) {
-        let data = {
-     		   docID: $($("#newForm")[0].docID).val(),
-     		   docFname: $($("#newForm")[0].docFname).val(),
-     		   docLname: $($("#newForm")[0].docLname).val(),
-     		   docPosition: $($("#newForm")[0].docPosition).val(),
-     		   docFee: $($("#newForm")[0].docFee).val(),
-     		   docAddress: $($("#newForm")[0].docAddress).val(),
-     		   mobileNo: $($("#newForm")[0].mobileNo).val(),
-     		   hosID: $('#hosID :selected').text()
-        } 
-        console.log($('#hosID option:selected').text());
-         
-
-       	 var status = validateItemForm();
-       	
-       	// If not valid-------------------
-       	if (status != true)
-       	 {
-	       	$.notify(status, "error");
-       	 }
-       	if(status == true){
-       		createDoctor(data);
-       		
-       	}
-            $("#newForm").trigger("reset");
-            e.preventDefault();
-       	 
-     });
-   
+// --------- Insert New Doctor API -----------------------------------------
      function createDoctor(data) {
     	 console.log(data);
          $.ajax({
@@ -120,27 +111,14 @@ $(document).ready(function(){
          });
          
      }
+//---------------------------------------------------------------------------
      
-     function loadButtons() {
-         $(".editTut").click(function(e){
-             getSingleDoctor($($(this)[0]).data("docid"));
-             $("#submitDoctorBtn").hide();
-             $("#updateDoctorBtn").show();
-             e.preventDefault();
-             $("#alertSuccess").hide();
-        	 $("#alertError").hide();
-             
-         });
-         
-         $(".deleteTut").click(function(e){
-             deleteDoctorDetails($($(this)[0]).data("docid"));
-             e.preventDefault();
-         })
-     }
-     
+//---- Get Selected Doctor details and fill Update fields --------------     
      function getSingleDoctor(id){
     	 
     	 console.log(id);
+    	 var data = {id};
+    	 
          $.ajax({
              url: 'webapi/doctors/doctor/' + id,
              method: 'get',
@@ -155,149 +133,181 @@ $(document).ready(function(){
                  $($("#newForm")[0].docAddress).val(data.docAddress);
                  $($("#newForm")[0].mobileNo).val(data.mobileNo);
                  
-                 
                  var listItems= "";
                  listItems+= "<option value='" + data.hosID + "'>" + data.hosID + "</option>";
                   $("#hosID").html(listItems);
-                  
                  $("#updateForm").show();
                  $("#editHostId").show();
              }
          });
      }
+//-----------------------------------------------------
      
-
+     
+// -------- Edit hospitals ID button ------------------
      $("#editHostId").on("click", function(e) {
     	 $("#editHostId").hide();
     		 getRegisteredHospitaIDs();
       });
-    
-
+//----------------------------------------------------
+     
+     
+//--------- Update doctor API -----------------------------
      function updateDoctorDetails(id, data){
      	console.log(data);
-     	 // + id
          $.ajax({
              url: 'doctorAPI',
              method: 'PUT',
              dataType: 'json',
              data: data,
-             success: function( status )
+             success: function(state)
              {
-             	 onItemSaveComplete("test", status);
-             	 getRegisteredDoctors();
+            		 $.notify("Data Successfully Updated.", "success");
+                 	 getRegisteredDoctors();
+                 	$("#docID").prop("readonly",false);
+                 	 $("#editHostId").hide();
+          
              }
          });
         
      }
+//------------------------------------------------------------
      
-     function onItemSaveComplete(response, status)
-     {
-     	console.log("Its done bro " + response, status);
-     }
-
      
-     $("#updateDoctorBtn").on("click", function(e) {
-    	
-        let data = {
-     		   docID: $($("#newForm")[0].docID).val(),
-     		   docFname: $($("#newForm")[0].docFname).val(),
-     		   docLname: $($("#newForm")[0].docLname).val(),
-     		   docPosition: $($("#newForm")[0].docPosition).val(),
-     		   docFee: $($("#newForm")[0].docFee).val(),
-     		   docAddress: $($("#newForm")[0].docAddress).val(),
-     		   mobileNo: $($("#newForm")[0].mobileNo).val(),
-     		   hosID: parseInt($($("#newForm")[0].hosID).val())+1
-        } 
-       
-      	// Form validation----------------
-      	 var status = validateItemForm();
 
 
-      	// If not valid-------------------
-      	if (status != true)
-      	 {
-	     	$.notify(status, "error");
-	       	$("#updateDoctorBtn").show();
-      	 }
-      	
-        if(status == true){
-       
-        updateDoctorDetails($($("#newForm")[0].docID).val(), data);
-        
-        $.notify("Data Successfully Updated.", "success");
-//       	 $("#alertSuccess").text("Data Successfully Updated.");
-//         $("#alertSuccess").show();
-       	}
-         
-         $("#newForm").trigger("reset");
-         $("#updateDoctorBtn").hide();
-         $("#submitDoctorBtn").show();
-         e.preventDefault();
-         
-        
-     });
-     
+//--------- Delete Doctor details API ---------------------------------    
      function deleteDoctorDetails(id){
      	console.log(id);
+     	var data = {id};
          $.ajax({
-             url: 'webapi/doctors/doctor/'+ id,
+             url: 'doctorAPI',
              method: 'DELETE',
              dataType: 'json',
+             data: data,
              success: function(data) {
                  console.log(data);
                  getRegisteredDoctors();
-                 
-                 // Clear status msges-------------
-//              	 $("#alertSuccess").text("");
-//              	 $("#alertSuccess").hide();
-//              	 $("#alertError").text("");
-//              	 $("#alertError").hide();
-//              	 $("#alertSuccess").text("Doctor Details Delete Completed.");
-//                 $("#alertSuccess").show();
-              	 
               	$.notify("Doctor Details Delete Completed.", "warn");
-              	
-           
+
+                $("#updateDoctorBtn").hide();
+                $("#submitDoctorBtn").show();
              }
          });
      }
+//-------------------------------------------------------------------  
      
-     function validateItemForm()
- 	{
+     
+//=============================== Button Clicks =============================================================
+     
+// -------------- Submit Button Click Event ----------------------
+     $("#submitDoctorBtn").on("click", function(e) {
+         let data = {
+      		   docID: $($("#newForm")[0].docID).val(),
+      		   docFname: $($("#newForm")[0].docFname).val(),
+      		   docLname: $($("#newForm")[0].docLname).val(),
+      		   docPosition: $($("#newForm")[0].docPosition).val(),
+      		   docFee: $($("#newForm")[0].docFee).val(),
+      		   docAddress: $($("#newForm")[0].docAddress).val(),
+      		   mobileNo: $($("#newForm")[0].mobileNo).val(),
+      		   hosID: $('#hosID :selected').text()
+         } 
+         console.log($('#hosID option:selected').text());
+          
 
-
- 		if ($("#docID").val().trim() == "")
- 		 {
- 			return "Empty Field Detected: Doctor's ID.";
- 		 }
- 		if ($("#docFname").val().trim() == "")
- 		 {
- 			return "Empty Field Detected: Doctor's Firstname.";
- 		 }
- 		if ($("#docLname").val().trim() == "")
- 		 {
- 			return "Empty Field Detected: Doctor's Lastname.";
- 		 }
- 		if ($("#docPosition").val().trim() == "")
- 		 {
- 			return "Empty Field Detected: Doctor's Position.";
- 		 }
- 		if ($("#docFee").val().trim() == "")
- 		 {
- 			return "Empty Field Detected: Doctor's Fee.";
- 		 }
- 		if ($("#docAddress").val().trim() == "")
- 		 {
- 			return "Empty Field Detected: Doctor's Address.";
- 		 }
- 		if ($("#mobileNo").val().trim() == "")
- 		 {
- 			return "Empty Field Detected: Doctor's Mobile Number.";
- 		 }
- 			return true;
- 	}
+        	 var status = validateItemForm();
+        	
+        	// If not valid-------------------
+        	if (status != true)
+        	 {
+ 	       	$.notify(status, "error");
+        	 }
+        	if(status == true){
+        		createDoctor(data);
+        		
+        	}
+             $("#newForm").trigger("reset");
+             e.preventDefault();
+        	 
+      });
+//-----------------------------------------------------
+     
+// -------------- Update Button Click Event -----------
+     $("#updateDoctorBtn").on("click", function(e) {
+     	
+         let data = {
+      		   docID: $($("#newForm")[0].docID).val(),
+      		   docFname: $($("#newForm")[0].docFname).val(),
+      		   docLname: $($("#newForm")[0].docLname).val(),
+      		   docPosition: $($("#newForm")[0].docPosition).val(),
+      		   docFee: $($("#newForm")[0].docFee).val(),
+      		   docAddress: $($("#newForm")[0].docAddress).val(),
+      		   mobileNo: $($("#newForm")[0].mobileNo).val(),
+      		   hosID: parseInt($($("#newForm")[0].hosID).val())+1
+         } 
+        
+       	// Form validation----------------
+       	 var status = validateItemForm();
+       	// If not valid-------------------
+       	if (status != true)
+       	 {
+ 	     	$.notify(status, "error");
+ 	       	$("#updateDoctorBtn").show();
+ 	       	
+       	 }
+       	
+         if(status == true){
+ 	        updateDoctorDetails($($("#newForm")[0].docID).val(), data);
+        	}
+          
+          $("#newForm").trigger("reset");
+          $("#updateDoctorBtn").hide();
+          $("#submitDoctorBtn").show();
+          e.preventDefault();
+          
+         
+      });
 });
-  
+ // -----------------------------------------------------------------
+
+//==================================================================================================
+
+//--------- Form Validation ------------------------------
+
+function validateItemForm()
+	{
 
 
+		if ($("#docID").val().trim() == "")
+		 {
+			return "Empty Field Detected: Doctor's ID.";
+		 }
+		if ($("#docFname").val().trim() == "")
+		 {
+			return "Empty Field Detected: Doctor's Firstname.";
+		 }
+		if ($("#docLname").val().trim() == "")
+		 {
+			return "Empty Field Detected: Doctor's Lastname.";
+		 }
+		if ($("#docPosition").val().trim() == "")
+		 {
+			return "Empty Field Detected: Doctor's Position.";
+		 }
+		if ($("#docFee").val().trim() == "")
+		 {
+			return "Empty Field Detected: Doctor's Fee.";
+		 }
+		if ($("#docAddress").val().trim() == "")
+		 {
+			return "Empty Field Detected: Doctor's Address.";
+		 }
+		if ($("#mobileNo").val().trim() == "")
+		 {
+			return "Empty Field Detected: Doctor's Mobile Number.";
+		 }
+			return true;
+	}
+
+//--------------------------------------------------------
 

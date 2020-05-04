@@ -36,6 +36,8 @@ public class DoctorResources {
 	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
 	public Doctor getDoctor(@PathParam("id")int id) 
 	{
+		
+		System.out.println("Single fdoctor api Clled.. ");
 //		if(repo.getDoctor(id).getDocID() == 0) {
 //			return "Invalid DoctorID.";	
 //		}else {
@@ -136,64 +138,64 @@ public class DoctorResources {
 //		
 //	}
 //	
-	@DELETE
-	@Path ("doctor/{id}")
-	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
-	public Doctor deleteDoctorDetails(@PathParam("id")int id) 
-	{
-		Doctor d = repo.getDoctor(id);
-		
+//	@DELETE
+//	@Path ("doctor/{id}")
+//	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+//	public Doctor deleteDoctorDetails(@PathParam("id")int id) 
+//	{
+//		Doctor d = repo.getDoctor(id);
+//		
+////		if(d.getDocID()!=0) {
+////			
+////			if(repo.kill(id))
+////			{
+////				System.out.println("Deleted Data: " + d.toString());
+////				return "Doctor details deleted Successfully. \nDeleted details: " + d;
+////			}
+////			else
+////			{
+////				return "Task Faild.";
+////			}
+////		}
+////		else {
+////			return "Please Insert Valid DocID.";
+////		}
 //		if(d.getDocID()!=0) {
+//			repo.kill(id);
 //			
-//			if(repo.kill(id))
-//			{
-//				System.out.println("Deleted Data: " + d.toString());
-//				return "Doctor details deleted Successfully. \nDeleted details: " + d;
-//			}
-//			else
-//			{
-//				return "Task Faild.";
-//			}
 //		}
-//		else {
-//			return "Please Insert Valid DocID.";
+//		return d;
+//		
+//	}
+//	
+//	public void updateTracker(Doctor d1)
+//	{
+//		
+//		char op = '"';
+//		
+//		if( !beforeUpdate.getDocFName().equals(d1.getDocFName())) {
+//			changes.add("\n" + "Doctor Firstname,\n " + op+beforeUpdate.getDocFName()+op + " Changed To " + op +d1.getDocFName()+op +"\n");
 //		}
-		if(d.getDocID()!=0) {
-			repo.kill(id);
-			
-		}
-		return d;
-		
-	}
-	
-	public void updateTracker(Doctor d1)
-	{
-		
-		char op = '"';
-		
-		if( !beforeUpdate.getDocFName().equals(d1.getDocFName())) {
-			changes.add("\n" + "Doctor Firstname,\n " + op+beforeUpdate.getDocFName()+op + " Changed To " + op +d1.getDocFName()+op +"\n");
-		}
-		if(!beforeUpdate.getDocLName().equals(d1.getDocLName())) {
-			changes.add("\n" + "Doctor Lastname,\n " + op+beforeUpdate.getDocLName()+op + " Changed To " + op +d1.getDocLName()+op +"\n");
-		}
-		if(!beforeUpdate.getDocPosition().equals(d1.getDocPosition())) {
-			changes.add("\n" + "Doctor Position,\n " + op+beforeUpdate.getDocPosition()+op + " Changed To " + op +d1.getDocPosition()+op +"\n");
-		}
-		if(beforeUpdate.getDocFee() != d1.getDocFee()) {
-			changes.add("\n" + "Doctor Fee,\n Rs." + op+beforeUpdate.getDocFee()+op + " Changed To " + "Rs."+ op +d1.getDocFee()+op +"\n");
-		}
-		if(beforeUpdate.getMobileNo() != d1.getMobileNo()) {
-			changes.add("\n" + "Doctor Mobile No,\n " + op+beforeUpdate.getMobileNo()+op + " Changed To " + op +d1.getMobileNo()+op +"\n");
-		}
-		if(!beforeUpdate.getDocAddress().equals(d1.getDocAddress())) {
-			changes.add("\n" + "Doctor Address,\n " + op+beforeUpdate.getDocAddress()+op + " Changed To " + op +d1.getDocAddress()+op +"\n");
-		}
-		if(beforeUpdate.getHosID() != d1.getHosID()) {
-			changes.add("\n" + "Doctor Hospital ID,\n " + op+beforeUpdate.getHosID()+op + " Changed To " + op +d1.getHosID()+op +"\n");
-		}
-		
-		
-	}
+//		if(!beforeUpdate.getDocLName().equals(d1.getDocLName())) {
+//			changes.add("\n" + "Doctor Lastname,\n " + op+beforeUpdate.getDocLName()+op + " Changed To " + op +d1.getDocLName()+op +"\n");
+//		}
+//		if(!beforeUpdate.getDocPosition().equals(d1.getDocPosition())) {
+//			changes.add("\n" + "Doctor Position,\n " + op+beforeUpdate.getDocPosition()+op + " Changed To " + op +d1.getDocPosition()+op +"\n");
+//		}
+//		if(beforeUpdate.getDocFee() != d1.getDocFee()) {
+//			changes.add("\n" + "Doctor Fee,\n Rs." + op+beforeUpdate.getDocFee()+op + " Changed To " + "Rs."+ op +d1.getDocFee()+op +"\n");
+//		}
+//		if(beforeUpdate.getMobileNo() != d1.getMobileNo()) {
+//			changes.add("\n" + "Doctor Mobile No,\n " + op+beforeUpdate.getMobileNo()+op + " Changed To " + op +d1.getMobileNo()+op +"\n");
+//		}
+//		if(!beforeUpdate.getDocAddress().equals(d1.getDocAddress())) {
+//			changes.add("\n" + "Doctor Address,\n " + op+beforeUpdate.getDocAddress()+op + " Changed To " + op +d1.getDocAddress()+op +"\n");
+//		}
+//		if(beforeUpdate.getHosID() != d1.getHosID()) {
+//			changes.add("\n" + "Doctor Hospital ID,\n " + op+beforeUpdate.getHosID()+op + " Changed To " + op +d1.getHosID()+op +"\n");
+//		}
+//		
+//		
+//	}
 	
 }

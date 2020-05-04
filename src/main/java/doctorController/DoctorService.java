@@ -142,7 +142,7 @@ public class DoctorService {
 	}
 
 	// update current doctor details in db
-	public String Update(List<Object> docList) {
+	public Boolean Update(List<Object> docList) {
 
 		Doctor d1 = new Doctor();
 
@@ -178,16 +178,14 @@ public class DoctorService {
 				st.setInt(8, d1.getDocID());
 
 				st.executeUpdate();
-				return "true";
-			} else {
-				return "InvalidhosID";
-			}
-
+				
+			} 
+			return true;
+			
 		} catch (Exception e) {
 			System.out.println(e);
-			return "false";
+			return false;
 		}
-
 	}
 
 	// delete doctor details in db
