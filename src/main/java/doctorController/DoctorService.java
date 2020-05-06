@@ -12,6 +12,7 @@ public class DoctorService {
 	Connection con = null;
 
 	public DoctorService() {
+		//connect to the MySQL Workbench DB(pafHospitalManagementDB2020).
 		String url = "jdbc:mysql://localhost:3306/pafHospitalManagementDB2020";
 		String username = "root";
 		String password = "";
